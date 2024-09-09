@@ -1,0 +1,15 @@
+.button{
+    width: 80px;
+    height: 80px;
+    font-size: large;
+    border: 2px solid silver;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-weight: 800;
+   background-color: rgb(233, 232, 232);
+   border-radius: 5px;
+   display: inline;
+   margin: 4px;
+    
+}
