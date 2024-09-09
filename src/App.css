@@ -14,10 +14,12 @@
    border-radius: 10px;
    padding: 10px;
    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+   padding-bottom: 40px;
 
  
 }
 .keypad{
+    padding-top: 20px;
     margin-top: 10px;
 }
 
