@@ -20,7 +20,7 @@ export default function Button({e,setval,val}) {
         setval(`Ans ${b}`);
       }
        else if(e==='X'){
-        setval(val.slice(0,-1));
+        setval(val.slice(0,-1));}
       else{
         setval(val+e)
       }
