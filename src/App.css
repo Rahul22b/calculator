@@ -1,57 +1,218 @@
-*{
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-}
-
-.calculator{
-    background-color: rgba(0, 0, 0, 0.119);
-    width: 380px;
-    border:1px solid black;
-    /* display: flex; */
-   margin: auto;
-   margin-top: 10px;
-   border-radius: 10px;
-   padding: 10px;
-   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-   padding-bottom: 40px;
-
- 
-}
-.keypad{
-    padding-top: 20px;
-    margin-top: 10px;
-}
-
-
-
-*{
-    box-sizing: border-box;
-}
-
-.display{
-  background-color: rgb(244, 243, 243);
-    width: 90%;
-    height: 80px;
-display: flex;
-justify-content:flex-end;
-align-items:center;
-padding-right: 10px;
-
-   
-    font-size:x-large;
-    text-align: right;
-    font-weight: 600;
-    border: 2px solid rgb(171, 168, 168);
-    border-radius: 6px;
-    margin: 0 auto;
+:root {
+    --primary-color-light: #4a55a2;
+    --secondary-color-light: #7895cb;
+    --background-light: #f5f5f5;
+    --display-background-light: #ffffff;
+    --keypad-background-light: #e2e8f0;
+    --button-background-light: #ffffff;
+    --button-hover-light: #eef2ff;
+    --text-color-light: #333333;
     
-}
-
-.footer{
+    --primary-color-dark: #7895cb;
+    --secondary-color-dark: #4a55a2;
+    --background-dark: #1e293b;
+    --display-background-dark: #334155;
+    --keypad-background-dark: #283548;
+    --button-background-dark: #475569;
+    --button-hover-dark: #64748b;
+    --text-color-dark: #f8fafc;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+  }
+  
+  body {
+    font-family: 'Roboto', Arial, sans-serif;
+  }
+  
+  .calculator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--background-light);
+    color: var(--text-color-light);
+  }
+  
+  .calculator.dark {
+    background-color: var(--background-dark);
+    color: var(--text-color-dark);
+  }
+  
+  .calculator-container {
+    width: 100%;
+    max-width: 360px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background-color: var(--display-background-light);
+  }
+  
+  .calculator.dark .calculator-container {
+    background-color: var(--display-background-dark);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  .calculator-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background-color: var(--primary-color-light);
+    color: white;
+  }
+  
+  .calculator.dark .calculator-header {
+    background-color: var(--primary-color-dark);
+  }
+  
+  .theme-toggle {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+    padding: 5px;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .theme-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Display styles */
+  .display {
+    padding: 20px;
+    text-align: right;
+    font-size: 32px;
+    font-weight: 300;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    overflow: hidden;
+    background-color: var(--display-background-light);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  
+  .calculator.dark .display {
+    background-color: var(--display-background-dark);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  /* Keypad styles */
+  .keypad-container {
+    padding: 16px;
+    background-color: var(--keypad-background-light);
+  }
+  
+  .calculator.dark .keypad-container {
+    background-color: var(--keypad-background-dark);
+  }
+  
+  /* This assumes your Keypad component renders buttons */
+  .keypad-container button {
+    width: calc(25% - 8px);
+    height: 60px;
+    margin: 4px;
+    border-radius: 12px;
+    border: none;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    background-color: var(--button-background-light);
+    color: var(--text-color-light);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .calculator.dark .keypad-container button {
+    background-color: var(--button-background-dark);
+    color: var(--text-color-dark);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .keypad-container button:hover {
+    background-color: var(--button-hover-light);
+    transform: translateY(-2px);
+  }
+  
+  .calculator.dark .keypad-container button:hover {
+    background-color: var(--button-hover-dark);
+  }
+  
+  .keypad-container button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Operator buttons can have a different style */
+  .keypad-container button.operator {
+    background-color: var(--secondary-color-light);
+    color: white;
+  }
+  
+  .calculator.dark .keypad-container button.operator {
+    background-color: var(--secondary-color-dark);
+  }
+  
+  .keypad-container button.equal {
+    background-color: var(--primary-color-light);
+    color: white;
+  }
+  
+  .calculator.dark .keypad-container button.equal {
+    background-color: var(--primary-color-dark);
+  }
+  
+  .footer {
     text-align: center;
-    margin-top: 10px;
-    font-weight: 700;
-}
-
-
+    padding: 16px;
+    font-size: 14px;
+    color: var(--text-color-light);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  
+  .calculator.dark .footer {
+    color: var(--text-color-dark);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .heart-animation {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .heart-animation:hover {
+    animation: heartbeat 1.5s infinite;
+  }
+  
+  @keyframes heartbeat {
+    0% { transform: scale(1); }
+    5% { transform: scale(1.1); }
+    10% { transform: scale(1); }
+    15% { transform: scale(1.1); }
+    20% { transform: scale(1); }
+    100% { transform: scale(1); }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 400px) {
+    .calculator-container {
+      max-width: 100%;
+      border-radius: 0;
+    }
+    
+    .keypad-container button {
+      height: 54px;
+      font-size: 18px;
+    }
+  }
