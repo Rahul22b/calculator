@@ -1,32 +1,55 @@
 :root {
-    --primary-color-light: #4a55a2;
-    --secondary-color-light: #7895cb;
-    --background-light: #f5f5f5;
+    /* Light theme */
+    --primary-color-light: #6366f1;
+    --secondary-color-light: #a5b4fc;
+    --tertiary-color-light: #4f46e5;
+    --background-light: #f8fafc;
     --display-background-light: #ffffff;
-    --keypad-background-light: #e2e8f0;
+    --display-text-light: #1e293b;
+    --keypad-background-light: #f1f5f9;
     --button-background-light: #ffffff;
     --button-hover-light: #eef2ff;
-    --text-color-light: #333333;
+    --button-text-light: #334155;
+    --operator-bg-light: #818cf8;
+    --operator-text-light: #ffffff;
+    --equal-bg-light: #4f46e5;
+    --equal-text-light: #ffffff;
+    --shadow-light: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --text-color-light: #334155;
+    --border-color-light: rgba(0, 0, 0, 0.05);
     
-    --primary-color-dark: #7895cb;
-    --secondary-color-dark: #4a55a2;
-    --background-dark: #1e293b;
-    --display-background-dark: #334155;
-    --keypad-background-dark: #283548;
-    --button-background-dark: #475569;
-    --button-hover-dark: #64748b;
-    --text-color-dark: #f8fafc;
+    /* Dark theme */
+    --primary-color-dark: #818cf8;
+    --secondary-color-dark: #6366f1;
+    --tertiary-color-dark: #a5b4fc;
+    --background-dark: #0f172a;
+    --display-background-dark: #1e293b;
+    --display-text-dark: #f8fafc;
+    --keypad-background-dark: #151e2c;
+    --button-background-dark: #334155;
+    --button-hover-dark: #475569;
+    --button-text-dark: #f1f5f9;
+    --operator-bg-dark: #6366f1;
+    --operator-text-dark: #ffffff;
+    --equal-bg-dark: #818cf8;
+    --equal-text-dark: #ffffff;
+    --shadow-dark: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+    --text-color-dark: #f1f5f9;
+    --border-color-dark: rgba(255, 255, 255, 0.05);
   }
   
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
+    font-family: 'Inter', 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
   }
   
   body {
-    font-family: 'Roboto', Arial, sans-serif;
+    font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
   .calculator {
@@ -36,6 +59,7 @@
     min-height: 100vh;
     background-color: var(--background-light);
     color: var(--text-color-light);
+    padding: 20px;
   }
   
   .calculator.dark {
@@ -43,25 +67,36 @@
     color: var(--text-color-dark);
   }
   
+  /* Animations */
+  .fade-in {
+    animation: fadeIn 0.8s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
   .calculator-container {
     width: 100%;
-    max-width: 360px;
-    border-radius: 16px;
+    max-width: 400px;
+    border-radius: 24px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-light);
     background-color: var(--display-background-light);
+    position: relative;
   }
   
   .calculator.dark .calculator-container {
     background-color: var(--display-background-dark);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-dark);
   }
   
   .calculator-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px;
+    padding: 20px;
     background-color: var(--primary-color-light);
     color: white;
   }
@@ -70,48 +105,195 @@
     background-color: var(--primary-color-dark);
   }
   
-  .theme-toggle {
-    background: none;
+  .header-controls {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .theme-toggle,
+  .history-toggle {
+    background: rgba(255, 255, 255, 0.2);
     border: none;
     font-size: 20px;
     cursor: pointer;
     color: white;
-    padding: 5px;
+    padding: 8px;
     border-radius: 50%;
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
   }
   
-  .theme-toggle:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+  .theme-toggle:hover,
+  .history-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  .theme-toggle:active,
+  .history-toggle:active {
+    transform: translateY(0);
+  }
+  
+  .tooltip {
+    position: absolute;
+    bottom: -36px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 100;
+  }
+  
+  .theme-toggle:hover .tooltip,
+  .history-toggle:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    bottom: -30px;
   }
   
   /* Display styles */
   .display {
-    padding: 20px;
+    padding: 30px 24px;
     text-align: right;
-    font-size: 32px;
-    font-weight: 300;
-    height: 100px;
+    font-size: 36px;
+    font-weight: 500;
+    min-height: 120px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     overflow: hidden;
     background-color: var(--display-background-light);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    color: var(--display-text-light);
+    border-bottom: 1px solid var(--border-color-light);
+    word-break: break-all;
+    position: relative;
   }
   
   .calculator.dark .display {
     background-color: var(--display-background-dark);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--display-text-dark);
+    border-bottom: 1px solid var(--border-color-dark);
+  }
+  
+  /* History panel */
+  .history-panel {
+    background-color: var(--display-background-light);
+    color: var(--text-color-light);
+    border-bottom: 1px solid var(--border-color-light);
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .calculator.dark .history-panel {
+    background-color: var(--display-background-dark);
+    color: var(--text-color-dark);
+    border-bottom: 1px solid var(--border-color-dark);
+  }
+  
+  .history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    position: sticky;
+    top: 0;
+    background-color: var(--display-background-light);
+    z-index: 10;
+    border-bottom: 1px solid var(--border-color-light);
+  }
+  
+  .calculator.dark .history-header {
+    background-color: var(--display-background-dark);
+    border-bottom: 1px solid var(--border-color-dark);
+  }
+  
+  .clear-history {
+    background: none;
+    border: none;
+    color: var(--primary-color-light);
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 14px;
+    border-radius: 4px;
+  }
+  
+  .calculator.dark .clear-history {
+    color: var(--primary-color-dark);
+  }
+  
+  .clear-history:hover {
+    background-color: var(--button-hover-light);
+  }
+  
+  .calculator.dark .clear-history:hover {
+    background-color: var(--button-hover-dark);
+  }
+  
+  .no-history {
+    padding: 16px;
+    text-align: center;
+    font-style: italic;
+    color: #94a3b8;
+  }
+  
+  .history-list {
+    list-style: none;
+  }
+  
+  .history-item {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color-light);
+    cursor: pointer;
+  }
+  
+  .calculator.dark .history-item {
+    border-bottom: 1px solid var(--border-color-dark);
+  }
+  
+  .history-item:hover {
+    background-color: var(--button-hover-light);
+  }
+  
+  .calculator.dark .history-item:hover {
+    background-color: var(--button-hover-dark);
+  }
+  
+  .history-expression {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 4px;
+  }
+  
+  .calculator.dark .history-expression {
+    color: #94a3b8;
+  }
+  
+  .history-result {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  
+  .history-timestamp {
+    font-size: 12px;
+    color: #94a3b8;
+    text-align: right;
+    margin-top: 4px;
   }
   
   /* Keypad styles */
   .keypad-container {
-    padding: 16px;
+    padding: 20px;
     background-color: var(--keypad-background-light);
   }
   
@@ -121,23 +303,45 @@
   
   /* This assumes your Keypad component renders buttons */
   .keypad-container button {
-    width: calc(25% - 8px);
-    height: 60px;
-    margin: 4px;
-    border-radius: 12px;
+    /* width: calc(25% - 12px); */
+    height: 65px;
+    margin: 6px;
+    border-radius: 16px;
     border: none;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 500;
     cursor: pointer;
     background-color: var(--button-background-light);
-    color: var(--text-color-light);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: var(--button-text-light);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
   }
   
   .calculator.dark .keypad-container button {
     background-color: var(--button-background-dark);
-    color: var(--text-color-dark);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    color: var(--button-text-dark);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .keypad-container button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  
+  .keypad-container button:active::after {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    transition: 0s;
   }
   
   .keypad-container button:hover {
@@ -150,27 +354,29 @@
   }
   
   .keypad-container button:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    transform: translateY(1px);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
   }
   
   /* Operator buttons can have a different style */
   .keypad-container button.operator {
-    background-color: var(--secondary-color-light);
-    color: white;
+    background-color: var(--operator-bg-light);
+    color: var(--operator-text-light);
   }
   
   .calculator.dark .keypad-container button.operator {
-    background-color: var(--secondary-color-dark);
+    background-color: var(--operator-bg-dark);
+    color: var(--operator-text-dark);
   }
   
   .keypad-container button.equal {
-    background-color: var(--primary-color-light);
-    color: white;
+    background-color: var(--equal-bg-light);
+    color: var(--equal-text-light);
   }
   
   .calculator.dark .keypad-container button.equal {
-    background-color: var(--primary-color-dark);
+    background-color: var(--equal-bg-dark);
+    color: var(--equal-text-dark);
   }
   
   .footer {
@@ -178,12 +384,13 @@
     padding: 16px;
     font-size: 14px;
     color: var(--text-color-light);
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-top: 1px solid var(--border-color-light);
+    position: relative;
   }
   
   .calculator.dark .footer {
     color: var(--text-color-dark);
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--border-color-dark);
   }
   
   .heart-animation {
@@ -197,7 +404,7 @@
   
   @keyframes heartbeat {
     0% { transform: scale(1); }
-    5% { transform: scale(1.1); }
+    5% { transform: scale(1.2); }
     10% { transform: scale(1); }
     15% { transform: scale(1.1); }
     20% { transform: scale(1); }
@@ -205,14 +412,43 @@
   }
   
   /* Responsive adjustments */
-  @media (max-width: 400px) {
+  @media (max-width: 480px) {
     .calculator-container {
       max-width: 100%;
+      height: 100vh;
       border-radius: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .display {
+      flex: 0 0 auto;
+    }
+    
+    .keypad-container {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     
     .keypad-container button {
-      height: 54px;
-      font-size: 18px;
+      height: 60px;
+      font-size: 20px;
     }
+    
+    .footer {
+      flex: 0 0 auto;
+    }
+  }
+  
+  /* For the Keypad.jsx modifications */
+  .keypad-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  
+  .keypad-grid button.span-2 {
+    grid-column: span 2;
   }
