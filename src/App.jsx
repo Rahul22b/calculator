@@ -112,7 +112,7 @@ export default function App() {
         </div>
         
         <div className="footer">
-          <span className="heart-animation">Made with ❤️ for Sana</span>
+          <span className="heart-animation">Made with ❤️</span>
         </div>
       </div>
     </div>
